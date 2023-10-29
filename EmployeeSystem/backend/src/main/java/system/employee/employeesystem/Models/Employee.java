@@ -22,15 +22,15 @@ public class Employee {
     private String email;
     @Transient
     private int age;
-    private LocalDate dob;
+    private LocalDate birthday;
     public int getAge() {
-        return Period.between(dob, LocalDate.now()).getYears();
+        return Period.between(birthday, LocalDate.now()).getYears();
     }
 
     public Employee(String firstName, String lastName, String email, LocalDate dob) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.dob = dob;
+        this.birthday= dob;
     }
 }
