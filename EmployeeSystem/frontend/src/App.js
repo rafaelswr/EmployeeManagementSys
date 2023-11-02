@@ -1,13 +1,13 @@
-
 import './App.css';
 import React,{useState, useEffect} from 'react';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import { NewEmployee } from './components/newEmployee/NewEmployee';
+import NewEmployee  from './components/newEmployee/NewEmployee';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import api from "./api/axiosConfig.js";
 import UpdateEmployee from './components/updateEmployee/UpdateEmployee';
+
 
 function App() {
 
@@ -15,6 +15,7 @@ function App() {
     const [theads, setTHeads] = useState([]);
     const [employee, setEmployee] = useState({});
 
+    
     //get All 
     const getEmployees = async ()=>{
       try {
@@ -60,7 +61,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route path='/employees' element={<Home employees={employees} theads={theads}></Home>}/>
+          <Route path='/employees' element={<Home employees={employees} getSingleEmployee={getSingleEmployee} theads={theads}></Home>}/>
           <Route path='/new_employee' element={<NewEmployee></NewEmployee>}></Route>
           <Route path='/employees/:employeeID' element={<UpdateEmployee setEmployee={setEmployee} getSingleEmployee={getSingleEmployee} employee={employee}></UpdateEmployee>}></Route>
         </Route>

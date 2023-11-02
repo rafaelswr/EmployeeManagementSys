@@ -1,0 +1,43 @@
+
+.form{
+    width: 100%;
+    height: auto;
+    border: 2px solid rgb(186, 186, 186);
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgb(230, 230, 230);
+    justify-content:flex-start;
+    align-items: center;
+    overflow: hidden; 
+    padding: 1%;
+    font-weight: bold;
+}
+.firstLastForm{
+    width: 50%;  
+    padding: 1%;
+}
+
+.birthdayForm{
+    width: 35%;
+    padding: 1%;
+}
+.emailForm{
+    width: 65%;
+    padding: 1%;
+}
+
+.button{
+    padding: 1%;
+}
+
+@media only screen and (width > 125vw){
+   .firstLastForm,
+  .birthdayForm,
+  .emailForm {
+    max-width: none; /* Remove a largura máxima quando a largura da tela for menor ou igual a 125vw */
+  }
+
+}

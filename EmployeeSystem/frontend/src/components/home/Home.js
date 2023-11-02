@@ -10,7 +10,7 @@ const Home = ({employees, theads}) => {
 
     const onClickDelete = async (employeeID)=>{
         try {
-            const response = await api.delete(`/employees/delete/${employeeID}`);
+           await api.delete(`/employees/delete/${employeeID}`);
             console.log("deleted successfully");
         } catch (error) {
             console.log("Error on deleting employee");
@@ -56,4 +56,5 @@ const Home = ({employees, theads}) => {
       </div>  
   )
 }
+
 export default Home; 
