@@ -20,9 +20,9 @@ const UpdateEmployee = ({getSingleEmployee, employee, setEmployee}) => {
         //console.log(emailRef.current.value);
         const updated = {...employee, email:emailRef.current.value}
         console.log(updated);
-
         try {
             const response = await api.put(`/employees/${employeeID}`, updated);
+            
             console.log(response.data);
         } catch (error) {
             console.log("Error updating employee with ID: ", employeeID);
