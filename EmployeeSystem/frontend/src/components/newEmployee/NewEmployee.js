@@ -2,13 +2,13 @@ import React, { useReducer} from 'react';
 import "./NewEmployee.css";
 import { Form, Button} from 'react-bootstrap';
 import api from "../../api/axiosConfig";
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import "./NewEmployee.css";
+//import io from "socket.io-client";
 
 const NewEmployee = () => {
 
-
-    const navigate = useNavigate();
+  //  const navigate = useNavigate();
 
     const employee_reducer = (state, action) => {
         switch (action.type) {
@@ -24,11 +24,7 @@ const NewEmployee = () => {
     const onClickSubmit = async () => {
         try {
             const response = await api.post("/employees/add", state);
-            if(response.status === 200 ){
-                navigate("/employees")
-            }
             console.log("Employee " + state + " created succesfully");
-            
         } catch (error) {
             console.log("Error on create employee ", error);
         }
@@ -38,7 +34,7 @@ const NewEmployee = () => {
     <div>
       <div>
             <Form onSubmit={onClickSubmit} className='form max'>
-                <Form.Group className="firstLastForm"  controlId="formFirstName">
+                <Form.Group className="firstLastForm" controlId="formFirstName">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control 
                         type="text" 
@@ -49,7 +45,7 @@ const NewEmployee = () => {
                         />
                 </Form.Group>
 
-                <Form.Group className="firstLastForm"  controlId="formLastName" >
+                <Form.Group className="firstLastForm" controlId="formLastName" >
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control 
                         type="text"

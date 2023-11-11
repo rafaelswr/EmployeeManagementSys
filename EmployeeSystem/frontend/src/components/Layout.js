@@ -6,7 +6,6 @@ const Layout = () => {
         <main style={{margin:50}}>
             <Outlet/>
         </main>
-
     )
 
 }
