@@ -1,0 +1,49 @@
+
+
+.card{
+    border: 1px solid rgb(207, 202, 202);
+    padding: 10px;
+    width: 220px;
+    height: 100%; /* Defina a altura como 100% para se ajustar automaticamente */
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    flex-direction: column;
+    display: flex;
+    background-color: rgb(240, 239, 239);
+}
+
+.imageDiv{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+}
+
+.infoDiv{
+    padding: 20px;
+    background-color: gainsboro;
+}
+
+.buttonsDiv{
+    flex-direction:row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px; 
+}
+
+
+.buttonsDiv Button {
+    margin-right: 2px; 
+}
+
+@media screen and (max-width: 600px) {
+    .buttonsDiv {
+        flex-direction: column;
+    }
+
+    .buttonsDiv Button {
+        margin-right: 0; 
+        margin-bottom: 10px;
+    }
+}
