@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -60,5 +60,15 @@ public class EmployeeService {
         }else {
             throw new IllegalStateException("Error updating object employee");
         }
+    }
+
+    public void saveEmployee(Employee emp) {
+        Optional<Employee> employee = employeeRepository.findByEmail(emp.getEmail());
+        if(employee.isPresent()){
+            throw new IllegalStateException("Ja existe");
+        }else{
+            employeeRepository.save(emp);
+        }
+
     }
 }
