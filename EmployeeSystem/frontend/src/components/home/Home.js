@@ -33,7 +33,7 @@ const Home = ({employees, theads}) => {
                   aria-describedby="search-bar"
                   value={searchTerm}
                   onChange={(val) =>
-                     
+                      
                         setSearchTerm(val.target.value)
                   }
                 />
@@ -41,14 +41,10 @@ const Home = ({employees, theads}) => {
             </div>
         </div>
         <hr></hr>
-          {searchTerm ? <p>{searchTerm}</p>: <p></p>}
+         
         <div className='emplo'>
-          
           {
-
-           
-          filteredEmployees.map((employee)=>{
-
+            filteredEmployees.map((employee)=>{
               return(
 
                 <CardEmployee key={employee.employeeId} clickDelete={onDeleteEmployee} employee={employee}></CardEmployee>
