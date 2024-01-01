@@ -1,25 +1,65 @@
-import React from 'react';
-import api from "../../api/axiosConfig";
+import React, {useState, useEffect} from 'react';
+
 import "./Home.css";
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import CardEmployee from '../CardEmployee';
+import { onDeleteEmployee } from '../../firebase/services';
+import { Form} from 'react-bootstrap';
+
 
 const Home = ({employees, theads}) => {
 
-    const onClickDelete = async (employeeID)=>{
-        try {
-           await api.delete(`/employees/delete/${employeeID}`);
-            console.log("deleted successfully");
-        } catch (error) {
-            console.log("Error on deleting employee");
-        }
-    }
+  const [searchTerm, setSearchTerm] = useState("");
+  
 
-    return (
-     <div className='Title'>
-        <Table striped bordered hover>
+  const filteredEmployees = employees.filter(employee =>
+    employee.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+      <>
+        <div className='mb-3' style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+            <div > 
+              <FontAwesomeIcon style={{ paddingRight: 5 }} icon={faMagnifyingGlass}/>
+            </div>
+            <div>
+              <Form.Group style={{ width:600, display: "flex", alignItems: "center" }}>
+                <Form.Control
+                  placeholder="Pesquisar..."
+                  aria-label="Pesquisar"
+                  aria-describedby="search-bar"
+                  value={searchTerm}
+                  onChange={(val) =>
+                     
+                        setSearchTerm(val.target.value)
+                  }
+                />
+              </Form.Group>
+            </div>
+        </div>
+        <hr></hr>
+          {searchTerm ? <p>{searchTerm}</p>: <p></p>}
+        <div className='emplo'>
+          
+          {
+
+           
+          filteredEmployees.map((employee)=>{
+
+              return(
+
+                <CardEmployee key={employee.employeeId} clickDelete={onDeleteEmployee} employee={employee}></CardEmployee>
+            )})
+          }
+        </div>
+      </>
+     /* 
+     <div className='Title' >
+     
+       <Table striped bordered hover>
       <thead>
         <tr>
             {theads.map((ele) => (
@@ -28,7 +68,7 @@ const Home = ({employees, theads}) => {
         </tr>
       </thead>
       <tbody>
-        
+      
         {employees.map((employee, index) => (
           <tr key={index}>
             {Object.values(employee).map((value, index) => (
@@ -54,6 +94,7 @@ const Home = ({employees, theads}) => {
       </tbody>
     </Table>
       </div>  
+      */
   )
 }
 

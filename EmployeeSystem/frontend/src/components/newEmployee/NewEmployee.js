@@ -1,14 +1,15 @@
-import React, { useReducer} from 'react';
+import React, { useReducer, useState} from 'react';
 import "./NewEmployee.css";
-import { Form, Button} from 'react-bootstrap';
+
 import api from "../../api/axiosConfig";
-//import { useNavigate } from 'react-router-dom';
-import "./NewEmployee.css";
-//import io from "socket.io-client";
+import "./NewEmployee.css"; 
+import { Form, Button, Image} from 'react-bootstrap';
+import { uploadPhotoPerfil } from '../../firebase/services';
+
 
 const NewEmployee = () => {
 
-  //  const navigate = useNavigate();
+    const [photo, setPhoto ] = useState(null);
 
     const employee_reducer = (state, action) => {
         switch (action.type) {
@@ -19,15 +20,29 @@ const NewEmployee = () => {
         }
     };
 
-    const [state, dispatch ] = useReducer(employee_reducer, {email:"", firstName:"", lastName:"", birthday:null})
+    const [state, dispatch ] = useReducer(employee_reducer, {email:"", firstName:"", lastName:"", job:"", birthday:null})
 
     const onClickSubmit = async () => {
-        try {
-            const response = await api.post("/employees/add", state);
-            console.log("Employee " + state + " created succesfully");
-        } catch (error) {
-            console.log("Error on create employee ", error);
-        }
+        try{
+         
+            if(photo!=null){
+                uploadPhotoPerfil(photo, state.firstName, state.lastName);
+                console.log("Employee photo uploaded successfully");
+            }
+            console.log("Employee created successfully:", state);
+
+            await api.post("/employees/add", state);
+            
+        }catch(error){
+            console.error("Error on create employee: ", error.message);
+        }  
+    }
+
+    const handlePhoto = (event) => {
+        const photo = event.target.files[0];
+        console.log(photo);
+        setPhoto(photo);
+        
     }
 
   return (
@@ -71,13 +86,49 @@ const NewEmployee = () => {
                         dispatch({type:"new_employee",payload:{field:"email", value:val.target.value}})
                     }} />
                 </Form.Group>
-            
-                <div className='button'>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                <Form.Group className="jobForm" controlId="jon">
+                    <Form.Label>Job</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Job"
+                        onChange={(val)=>{
+                            dispatch({type:"new_employee",payload:{field:"job", value:val.target.value}})
+                        }}
+                        />
+                </Form.Group>
+
+                    <div style={{flexDirection:"column", display:'flex', paddingLeft:15}}>            
+                        <div className="mb-2 mt-1">
+                            Photo ID
+                            <div>
+                                <input onChange={handlePhoto} type="file" id="file-input" accept="image/png, image/gif, image/jpeg" name="ImageStyle"/>
+                            </div>    
+                        </div> 
+                    {
+                        photo!= null && (
+                            <div style={{marginBottom:10}}>
+                                <Image
+                                src={URL.createObjectURL(photo)}
+                                alt="Uploaded"
+                                style={{ width: '50px', height: '50px' }}
+                                />
+                          </div>
+                        )
+                    }
+                      
+               
+
+                      <div className='button'>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </div>   
+
                 </div>
+             
             </Form>
+               
+            
         </div>
     </div>
   
@@ -86,17 +137,3 @@ const NewEmployee = () => {
 
 
 export default NewEmployee; 
-
-/**
- * 
- * 
-        <div className='form max '>  
-            <div className='son'> 
-                <p>Hello guys, how are you doing </p>
-            </div>
-            <div className='son'>  
-                <p>Hello guys, how are you doing </p>
-            </div>
-        </div>
-
- */

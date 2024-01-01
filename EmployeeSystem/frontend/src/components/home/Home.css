@@ -1,3 +1,20 @@
 .Title{
     text-align: center;
-  }
+}
+
+.emplo{
+  padding: 20;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start; 
+}
+
+hr {
+  border: 2px solid red; 
+}
+
+.border{
+  border: 1px solid red;
+}

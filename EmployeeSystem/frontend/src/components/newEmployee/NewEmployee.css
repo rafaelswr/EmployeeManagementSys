@@ -2,17 +2,16 @@
 .form{
     width: 100%;
     height: auto;
-    border: 2px solid rgb(186, 186, 186);
     border-radius: 10px;
     display: flex;
     position: relative;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: rgb(230, 230, 230);
     justify-content:flex-start;
     align-items: center;
     overflow: hidden; 
     padding: 1%;
+    border:3px solid black; 
     font-weight: bold;
 }
 .firstLastForm{
@@ -30,6 +29,11 @@
 }
 
 .button{
+    padding: 1%;
+}
+
+.jobForm{
+    width: 20%;  
     padding: 1%;
 }
 
