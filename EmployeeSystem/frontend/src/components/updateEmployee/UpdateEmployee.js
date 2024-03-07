@@ -28,11 +28,9 @@ const UpdateEmployee = ({getSingleEmployee, employee, setEmployee}) => {
             console.log("Error updating employee with ID: ", employeeID);
         }
 
-    }
+    } 
 
-  
     return (
-
         <Form onSubmit={onClickSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -42,9 +40,6 @@ const UpdateEmployee = ({getSingleEmployee, employee, setEmployee}) => {
                 Submit
             </Button>
        </Form>
-    
-  
-  
    )
 }
 

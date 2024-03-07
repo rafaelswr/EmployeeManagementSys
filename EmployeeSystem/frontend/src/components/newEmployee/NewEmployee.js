@@ -87,7 +87,7 @@ const NewEmployee = () => {
                     }} />
                 </Form.Group>
                 <Form.Group className="jobForm" controlId="jon">
-                    <Form.Label>Job</Form.Label>
+                    <Form.Label>Job Position</Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Job"

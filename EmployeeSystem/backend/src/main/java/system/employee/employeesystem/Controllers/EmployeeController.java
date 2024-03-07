@@ -1,5 +1,6 @@
 package system.employee.employeesystem.Controllers;
 
+import com.google.api.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import system.employee.employeesystem.DTO.EmployeeDTO;
 import system.employee.employeesystem.Models.Employee;
 import system.employee.employeesystem.Services.EmployeeService;
 
@@ -21,10 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @CrossOrigin(origins="http://localhost:3000"/*,allowCredentials)"true"*/)
 @RequestMapping("/employees")
 public class EmployeeController {
-    /*
-    @Autowired
-    public SimpMessagingTemplate messagingTemplate;
-    */
+
     @Autowired
     private SSEController sseController;
 
@@ -37,8 +36,9 @@ public class EmployeeController {
     }
 
 
+
     @GetMapping()
-    public ResponseEntity<List<Employee>> getEmployees(){
+    public ResponseEntity<List<EmployeeDTO>> getEmployees(){
         return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
     }
 
@@ -46,6 +46,11 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     public ResponseEntity<Optional<Employee>> getEmployee(@PathVariable Long employeeId){
         return new ResponseEntity<>(employeeService.getEmployee(employeeId), HttpStatus.OK);
+    }
+
+    @GetMapping("/cargo/{cargoName}")
+    public ResponseEntity<List<EmployeeDTO>> getAllByCargo(@PathVariable String cargoName){
+        return new ResponseEntity<>(employeeService.getAllByCargo(cargoName), HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -62,6 +67,7 @@ public class EmployeeController {
             employeeService.deleteEmployee(employeeId);
             sseController.notifyClients(empById.get());
         }
+
     }
 
     @PutMapping("/{employeeId}")
@@ -70,5 +76,7 @@ public class EmployeeController {
         sseController.notifyClients(emp);
 
     }
+
+
 
 }

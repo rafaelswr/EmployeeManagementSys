@@ -1,16 +1,20 @@
 package system.employee.employeesystem.Services;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import system.employee.employeesystem.DTO.EmployeeDTO;
 import system.employee.employeesystem.Models.Employee;
 import system.employee.employeesystem.Repositories.EmployeeRepository;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
@@ -19,8 +23,16 @@ public class EmployeeService {
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-    public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+
+    public List<EmployeeDTO> getEmployees() {
+        return employeeRepository.findAll().stream().map(this::mapToEmployeeDTO).toList();
+    }
+
+    private EmployeeDTO mapToEmployeeDTO(Employee employee) {
+        return EmployeeDTO.builder().employeeId(employee.getEmployeeId())
+                .name(employee.getFirstName()+" "+employee.getLastName())
+                .cargo(employee.getCargo().getCargoName())
+                .build();
     }
 
     public Optional<Employee> getEmployee(Long employeeId) {
@@ -28,7 +40,7 @@ public class EmployeeService {
         if(emp.isPresent()){
             return emp;
         }else{
-            throw new IllegalStateException("Employee "+employeeId+" not found");
+            throw new IllegalStateException("Employee " + employeeId + " not found");
         }
     }
 
@@ -70,5 +82,9 @@ public class EmployeeService {
             employeeRepository.save(emp);
         }
 
+    }
+
+    public List<EmployeeDTO> getAllByCargo(String cargoName) {
+        return employeeRepository.getAllByCargoName(cargoName).stream().map(this::mapToEmployeeDTO).collect(Collectors.toList());
     }
 }

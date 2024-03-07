@@ -5,21 +5,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import system.employee.employeesystem.DTO.EmployeeDTO;
+import system.employee.employeesystem.Models.Cargo;
 import system.employee.employeesystem.Models.Employee;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface CargoRepository extends   JpaRepository<Cargo, Long> {
 
-    @Query("SELECT s from Employee s where s.email = ?1")
-    Optional<Employee> findByEmail(String email);
+    @Query("SELECT c from Cargo c where c.cargoId = ?1 ")
+    Optional<Cargo> findByCargoId(Long id);
 
-    @Query("SELECT s from Employee s where s.employeeId= ?1")
-    Optional<Employee> findById(long employeeId);
+    @Query("SELECT c from Cargo c JOIN c.employees r where r.cargo.cargoName = :cargo")
+    List<Employee> getEmployeesByCargo(@Param("cargo") String cargo);
 
-    @Query("SELECT s from Employee s where s.cargo.cargoName = :cargo")
-    List<Employee> getAllByCargoName(@Param("cargo") String cargo);
 
 }

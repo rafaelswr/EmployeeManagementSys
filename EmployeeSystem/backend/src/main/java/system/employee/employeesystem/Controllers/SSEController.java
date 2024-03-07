@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import system.employee.employeesystem.DTO.EmployeeDTO;
 import system.employee.employeesystem.Models.Employee;
 import system.employee.employeesystem.Services.EmployeeService;
 
@@ -35,7 +36,7 @@ public class SSEController {
         emitters.add(emitter);
         emitter.onCompletion(() -> emitters.remove(emitter));
         try {
-            List<Employee> employees = employeeService.getEmployees();
+            List<EmployeeDTO> employees = employeeService.getEmployees();
             emitter.send(SseEmitter.event().data(employees, MediaType.APPLICATION_JSON));
         } catch (IOException e) {
             emitter.completeWithError(e);
